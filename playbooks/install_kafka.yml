@@ -1,0 +1,35 @@
+---
+- name: Network Getting Started First Playbook
+  connection: network_cli
+  hosts: localhost
+  remote_user: osboxes
+  become_method: sudo
+  become_user: root
+  vars:
+    http_port: 2222
+    max_clients: 200
+  tasks:
+    - name: Check update for OS
+      command: yum install curl which
+    - name: Install Confluent Platform public key
+      command: rpm --import https://packages.confluent.io/rpm/5.0/archive.key
+    - name: Navigate to /etc/yum.repos.d/ and create confluent.repo
+      blockinfile:
+        path: /etc/yum.repos.d/confluent.repo
+        block: |
+          [Confluent.dist]
+          name=Confluent repository (dist)
+          baseurl=https://packages.confluent.io/rpm/5.0/7
+          gpgcheck=1
+          gpgkey=https://packages.confluent.io/rpm/5.0/archive.key
+          enabled=1
+          
+          [Confluent]
+          name=Confluent repository
+          baseurl=https://packages.confluent.io/rpm/5.0
+          gpgcheck=1
+          gpgkey=https://packages.confluent.io/rpm/5.0/archive.key
+          enabled=1
+    - name: Clear YUM caches and install Confluent Platform
+      command: yum clean all && yum install confluent-platform-oss-2.11
+

@@ -1,0 +1,30 @@
+---
+- name: Network Getting Started First Playbook
+  connection: network_cli
+  hosts: localhost
+  remote_user: osboxes
+  become_method: sudo
+  become_user: root
+  vars:
+    http_port: 2222
+    max_clients: 200
+  tasks:
+    - name: Check update for OS
+      command: yum update
+    - name: restart ntpd
+      service:
+        name: ntpd
+        state: restarted
+    - name: ensure apache is at the latest version
+      yum:
+        name: httpd
+        state: latest
+    - name: ensure apache is running
+      service:
+        name: httpd
+        state: started
+  handlers:
+    - name: restart apache
+      service:
+        name: httpd
+        state: restarted

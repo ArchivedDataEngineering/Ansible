@@ -1,0 +1,30 @@
+---
+- name: str()
+  connection: str()
+  hosts: str()
+  remote_user: str()
+  become_method: str()
+  become_user: str()
+  vars:
+    http_port: int(min=2222,max=2222)
+    max_clients: int(min=200,max=200)
+  tasks:
+    - name: str()
+      command: str()
+    - name: str()
+      service:
+        name: str()
+        state: enum('restarted')
+    - name: str()
+      yum:
+        name: str()
+        state: enum('latest')
+    - name: str()
+      service:
+        name: str()
+        state: enum('started')
+  handlers:
+    - name: str()
+      service:
+        name: str()
+        state: enum('restarted')
