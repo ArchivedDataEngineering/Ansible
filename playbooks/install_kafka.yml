@@ -18,7 +18,9 @@
         name: which
         state: latest
     - name: Install Confluent Platform public key
-      command: rpm --import https://packages.confluent.io/rpm/5.0/archive.key
+      rpm_key:
+        key=https://packages.confluent.io/rpm/5.0/archive.key
+        state=present
     - name: Navigate to /etc/yum.repos.d/ and create confluent.repo
       blockinfile:
         path: /etc/yum.repos.d/confluent.repo
