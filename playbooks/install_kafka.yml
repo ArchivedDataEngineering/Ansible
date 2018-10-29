@@ -9,8 +9,14 @@
     http_port: 2222
     max_clients: 200
   tasks:
-    - name: Check update for OS
-      command: yum install curl which
+    - name: Install Curl
+      yum:
+        name: curl
+        state: latest
+    - name: Install which
+      yum:
+        name: which
+        state: latest
     - name: Install Confluent Platform public key
       command: rpm --import https://packages.confluent.io/rpm/5.0/archive.key
     - name: Navigate to /etc/yum.repos.d/ and create confluent.repo
